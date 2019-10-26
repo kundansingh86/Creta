@@ -25,18 +25,28 @@ class SqlQueryStatement {
 
     private function buildConditionTypes(array $conditions, $operator) {    
         $valueSets = [];
-        foreach($conditions as $key => $value) {
-            $keyArray = explode(' ', trim($key));
-
-            if(sizeof($keyArray) > 1) {
-                $valueSets[] = "$this->table.$keyArray[0] $keyArray[1] ?";
-            } 
-            else {
-                $valueSets[] = "$this->table.$key = ?";
+        foreach($conditions as $key => $val) {
+            $values = [];    
+            if(is_array($val)) {
+                $values = $val;
+            } else {
+                $values[] = $val;
             }
 
-            $this->vars[] = $value;
-            $this->types .= Utils::getValueType($value);
+            foreach($values as $value) {
+
+                $keyArray = explode(' ', trim($key));
+
+                if(sizeof($keyArray) > 1) {
+                    $valueSets[] = "$this->table.$keyArray[0] $keyArray[1] ?";
+                } 
+                else {
+                    $valueSets[] = "$this->table.$key = ?";
+                }
+
+                $this->vars[] = $value;
+                $this->types .= Utils::getValueType($value);
+            }
         }
         
         return '(' . implode(' '.$operator.' ', $valueSets) . ' TBR )';

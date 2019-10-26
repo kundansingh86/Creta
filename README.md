@@ -1,4 +1,4 @@
-# Creta - PHP Fluent MySql Micro ORM
+# Creta - PHP Micro ORM with MySQL
 A simple PHP Micro MySQL ORM with Fluent Interface
 
 ## Features
@@ -7,7 +7,7 @@ A simple PHP Micro MySQL ORM with Fluent Interface
 - Fluent Design and Interface.
 - Required minimum dependency i.e. only PHP >=5.3.0.
 - Prevent from SQL Injections.
-- Exceptional error reporting (with hints, context)
+- Where conditions in hierarchy with AND and OR operators.
 
 ## Installation (with [Composer](https://getcomposer.org))
 
@@ -127,3 +127,65 @@ Close the context and connection when operations are over
 ```php
 $context->close();
 ```
+
+## Advance Topic
+
+Where conditions formation in various scenarios with AND & OR Cojuctions and other Operators i.e <, >, <= , >=, like
+
+### Where clause with AND and OR operators
+
+Example 1: SELECT * FROM person where person.id = 2 AND person.position = 'manager'
+
+```php
+$result = $context->table('person')
+                  ->select()
+                  ->where(['id' => 2, 'position' => 'manager'])  
+                  ->execute();
+```
+
+Example 2: SELECT * FROM person WHERE (person.position = 'manager' OR (person.salary >= 2000 AND person.salary <= 3000))
+
+```php
+$result = $context->table('person')
+                  ->select()
+                  ->where(['position' => 'manager'])
+                  ->withOr(['salary >=' => 2000, 'salary <=' => 3000]) 
+                  ->execute();
+```
+
+Example 3: SELECT * FROM person WHERE (person.salary > 3000 AND (person.position = 'manager' OR person.position = 'executive'))
+
+```php
+$result = $context->table('person')
+                  ->select()
+                  ->where(['salary >' => 3000])
+                  ->withAnd(['position' => ['manager', 'executive']]) 
+                  ->execute();
+```
+
+Example 4: SELECT * FROM person WHERE person.position = 'manager' OR person.position = 'executive'
+
+```php
+$result = $context->table('person')
+                  ->select()
+                  ->whereOr(['position' => ['manager', 'executive']]) 
+                  ->execute();
+```
+
+Example 5: SELECT * FROM person WHERE (person.age > 20 AND person.age < 22) OR (person.age > 25 AND person.age < 28)
+
+```php
+$result = $context->table('person')
+                  ->select()
+                  ->where(['age >' => 20, 'age <' => 22]) 
+                  ->orWhere(['age >' => 25, 'age <' => 28])  
+                  ->execute();
+```
+
+## Future Roadmap
+
+- Insert mutliple records at once.
+- JOIN in tables.
+
+
+Note: A test.sql and test.php files are available in the repo for demo purpose.
