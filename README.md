@@ -135,7 +135,7 @@ Where conditions formation in various scenarios with AND & OR Cojuctions and oth
 
 #### Where clause with AND and OR operators
 
-> Example 1: SELECT * FROM person where person.id = 2 AND person.position = 'manager'
+###### **Example 1:** SELECT * FROM person where id = 2 AND position = 'manager'
 
 ```php
 $result = $context->table('person')
@@ -144,7 +144,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-> Example 2: SELECT * FROM person WHERE (person.position = 'manager' OR (person.salary >= 2000 AND person.salary <= 3000))
+###### **Example 2:** SELECT * FROM person WHERE (position = 'manager' OR (salary >= 2000 AND salary <= 3000))
 
 ```php
 $result = $context->table('person')
@@ -154,7 +154,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-> Example 3: SELECT * FROM person WHERE (person.salary > 3000 AND (person.position = 'manager' OR person.position = 'executive'))
+###### **Example 3:** SELECT * FROM person WHERE (salary > 3000 AND (position = 'manager' OR position = 'executive'))
 
 ```php
 $result = $context->table('person')
@@ -164,7 +164,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-> Example 4: SELECT * FROM person WHERE person.position = 'manager' OR person.position = 'executive'
+###### **Example 4:** SELECT * FROM person WHERE position = 'manager' OR position = 'executive'
 
 ```php
 $result = $context->table('person')
@@ -173,7 +173,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-> Example 5: SELECT * FROM person WHERE (person.age > 20 AND person.age < 22) OR (person.age > 25 AND person.age < 28)
+###### **Example 5:** SELECT * FROM person WHERE (age > 20 AND age < 22) OR (age > 25 AND age < 28)
 
 ```php
 $result = $context->table('person')
