@@ -119,3 +119,11 @@ echo $context->table('person') // table
              ->where(['id' => 2, 'position' => 'manager'])  // condition with name value pair 
              ->query(); // returns the generated sql query
 ```
+
+### Close Context (Recommended)
+
+Close the context and connection when operations are over
+
+```php
+$context->close();
+```
