@@ -1,6 +1,9 @@
 {
     "name": "kundansingh86/creta",
     "description": "A simple PHP Micro MySQL ORM with Fluent Interface",
+    "type": "library",
+    "keywords": ["php","orm","micro orm","fluent","fluent-design","simple", "mysql"],
+    "homepage": "https://github.com/kundansingh86/Creta",
     "authors": [
         {
             "name": "Kundan Singh Chouhan",
@@ -15,5 +18,6 @@
         "psr-4": {
             "Creta\\": "src/"
         }
-    }
+    },
+    "license": "MIT"
 }
