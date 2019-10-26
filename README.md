@@ -90,9 +90,9 @@ Select all columns from the table with the where condition
 
 ```php
 $result = $context->table('person') // table
-                ->select()
-                ->where(['id' => 2, 'position' => 'manager'])  // condition with name value pair 
-                ->execute();
+                  ->select()
+                  ->where(['id' => 2, 'position' => 'manager'])  // condition with name value pair 
+                  ->execute();
 
 echo '<pre>';
 print_r($result);
@@ -102,8 +102,8 @@ Select specific columns from the table
 
 ```php
 $result = $context->table('person') // table
-                ->select(["id", "name", "position"]) // column name array
-                ->execute();
+                  ->select(["id", "name", "position"]) // column name array
+                  ->execute();
 
 echo '<pre>';
 print_r($result);
