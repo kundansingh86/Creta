@@ -127,14 +127,15 @@ Close the context and connection when operations are over
 ```php
 $context->close();
 ```
+*Note: A test.sql and test.php files are available in the repo for demo purpose.*
 
-## Advance Topic
+## Advance Topics
 
 Where conditions formation in various scenarios with AND & OR Cojuctions and other Operators i.e <, >, <= , >=, like
 
-### Where clause with AND and OR operators
+#### Where clause with AND and OR operators
 
-Example 1: SELECT * FROM person where person.id = 2 AND person.position = 'manager'
+> Example 1: SELECT * FROM person where person.id = 2 AND person.position = 'manager'
 
 ```php
 $result = $context->table('person')
@@ -143,7 +144,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-Example 2: SELECT * FROM person WHERE (person.position = 'manager' OR (person.salary >= 2000 AND person.salary <= 3000))
+> Example 2: SELECT * FROM person WHERE (person.position = 'manager' OR (person.salary >= 2000 AND person.salary <= 3000))
 
 ```php
 $result = $context->table('person')
@@ -153,7 +154,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-Example 3: SELECT * FROM person WHERE (person.salary > 3000 AND (person.position = 'manager' OR person.position = 'executive'))
+> Example 3: SELECT * FROM person WHERE (person.salary > 3000 AND (person.position = 'manager' OR person.position = 'executive'))
 
 ```php
 $result = $context->table('person')
@@ -163,7 +164,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-Example 4: SELECT * FROM person WHERE person.position = 'manager' OR person.position = 'executive'
+> Example 4: SELECT * FROM person WHERE person.position = 'manager' OR person.position = 'executive'
 
 ```php
 $result = $context->table('person')
@@ -172,7 +173,7 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-Example 5: SELECT * FROM person WHERE (person.age > 20 AND person.age < 22) OR (person.age > 25 AND person.age < 28)
+> Example 5: SELECT * FROM person WHERE (person.age > 20 AND person.age < 22) OR (person.age > 25 AND person.age < 28)
 
 ```php
 $result = $context->table('person')
@@ -182,10 +183,17 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-## Future Roadmap
+## Roadmap
 
 - Insert mutliple records at once.
 - JOIN in tables.
 
+## Contributing
 
-Note: A test.sql and test.php files are available in the repo for demo purpose.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
