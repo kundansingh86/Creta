@@ -8,6 +8,8 @@ A simple PHP Micro MySQL ORM with Fluent Interface
 - Required minimum dependency i.e. only PHP >=5.3.0.
 - Prevent from SQL Injections.
 - Where conditions in hierarchy with AND and OR operators.
+- Order by clause with ascending and descending.
+- Limit and offset.
 
 ## Installation (with [Composer](https://getcomposer.org))
 
@@ -103,6 +105,8 @@ Select specific columns from the table
 ```php
 $result = $context->table('person') // table
                   ->select(["id", "name", "position"]) // column name array
+                  ->orderByDesc('salary', 'position') // order by salary then by position in descending
+                  ->limit(2, 1) // limit with 2 records and skip the 1st record
                   ->execute();
 
 echo '<pre>';
@@ -117,6 +121,7 @@ See the sql query output of any statement
 echo $context->table('person') // table
              ->select()
              ->where(['id' => 2, 'position' => 'manager'])  // condition with name value pair 
+             ->orderBy('name') // order by name in ascending
              ->query(); // returns the generated sql query
 ```
 
@@ -173,19 +178,22 @@ $result = $context->table('person')
                   ->execute();
 ```
 
-###### **Example 5:** SELECT * FROM person WHERE (age > 20 AND age < 22) OR (age > 25 AND age < 28)
+###### **Example 5:** SELECT * FROM person WHERE (age > 20 AND age < 22) OR (age > 25 AND age < 28) ORDER BY name asc
 
 ```php
 $result = $context->table('person')
                   ->select()
                   ->where(['age >' => 20, 'age <' => 22]) 
-                  ->orWhere(['age >' => 25, 'age <' => 28])  
+                  ->orWhere(['age >' => 25, 'age <' => 28])
+                  ->orderBy('name')  
                   ->execute();
 ```
 
 ## Roadmap
 
 - Insert mutliple records at once.
+- Group by and Having Clause.
+- Aggregate Functions.
 - JOIN in tables.
 
 ## Contributing

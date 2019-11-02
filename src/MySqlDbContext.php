@@ -90,11 +90,20 @@ class MySqlDbContext implements iDbContext {
 
     private function buildConditionStatement(array $conditions, $conjuction) {
         if(Utils::isAssociativeArray($conditions)) {
-            $this->sqlQueryStmt->conditionQuery($conditions, $conjuction);
+            $this->sqlQueryStmt->whereClause($conditions, $conjuction);
             return $this;
         }
 
         die('Sequential array is not allowed');
+    }
+
+    private function buildOrderStatement($asc, $columns) {
+        if(Utils::isSequentialArray($columns)) {
+            $this->sqlQueryStmt->orderByClause($asc, $columns);
+            return $this;
+        }
+
+        die('Associative array is not allowed');
     }
 
     public function where(array $conditions) {
@@ -115,6 +124,19 @@ class MySqlDbContext implements iDbContext {
 
     public function withOr(array $conditions) {
         return $this->buildConditionStatement($conditions, Conjunctions::WITH_OR);
+    }
+
+    public function orderBy(...$columns) {
+        return $this->buildOrderStatement(true, $columns);
+    }
+
+    public function orderByDesc(...$columns) {
+        return $this->buildOrderStatement(false, $columns);
+    }
+
+    public function limit($limit, $offset = 0) {
+        $this->sqlQueryStmt->limit($limit, $offset);
+        return $this;
     }
 
     public function query() {

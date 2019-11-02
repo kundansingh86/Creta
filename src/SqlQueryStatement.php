@@ -6,6 +6,8 @@ class SqlQueryStatement {
     private $table;
     private $queryStmt = '';
     private $conditionStmt = '';
+    private $orderByStmt = '';
+    private $limitStmt = '';
 
     public $types = '';
     public $vars = [];
@@ -61,6 +63,7 @@ class SqlQueryStatement {
     }
 
     function updateQuery(array $columns) {
+        
         $valueSets = array();
         foreach($columns as $key => $value) {
             $valueSets[] = $this->table . '.' . $key . " = ?";
@@ -92,7 +95,7 @@ class SqlQueryStatement {
         $this->queryStmt = "SELECT $columnsString FROM $this->table";
     } 
 
-    function conditionQuery(array $conditions, $conjunction) {
+    function whereClause(array $conditions, $conjunction) {
         if(sizeof($conditions) > 0) {
             switch($conjunction) {
                 case Conjunctions::AND:
@@ -120,10 +123,34 @@ class SqlQueryStatement {
 
     }
 
+    function orderByClause($asc, array $columns) {
+        if($columns != null || sizeof($columns) > 0) {
+            $valueSets = array();
+            foreach($columns as $key => $value) {
+                $valueSets[] = $this->table . '.' . $value;
+            }
+
+            $asc = $asc === true ? ' asc' : ' desc';
+            $this->orderByStmt = implode(', ', $valueSets) . $asc;
+        }
+    }
+
+    function limit($limit, $offset) {
+        $this->limitStmt = "$offset, $limit";
+    }
+
     function end() {
         if(strlen($this->conditionStmt) > 0) {
             $this->conditionStmt = str_replace(' TBR ', '', $this->conditionStmt);
             $this->queryStmt .= ' WHERE ' . $this->conditionStmt;
+        }
+
+        if(strlen($this->orderByStmt) > 0) {
+            $this->queryStmt .= ' ORDER BY ' . $this->orderByStmt;
+        }
+
+        if(strlen($this->limitStmt) > 0) {
+            $this->queryStmt .= ' LIMIT ' . $this->limitStmt;
         }
 
         $refParams = array();
