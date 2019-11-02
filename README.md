@@ -94,6 +94,7 @@ Select all columns from the table with the where condition
 $result = $context->table('person') // table
                   ->select()
                   ->where(['id' => 2, 'position' => 'manager'])  // condition with name value pair 
+                  ->orderBy('name') // order by name in ascending
                   ->execute();
 
 echo '<pre>';
